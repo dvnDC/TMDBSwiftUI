@@ -13,14 +13,17 @@ struct ContentView: View {
     
     
     var body: some View {
-        NavigationView {
+        
+        NavigationStack {
             List(movies, id:\.id) { movie in
-                Text(movie.title ?? "no title")
-            }
-            .navigationBarTitle("Movies")
-            .listStyle(PlainListStyle())
-        }
-        .onAppear(perform: loadData)
+                NavigationLink(destination: MovieDetailView(movie: movie)) {
+                    MovieCardView(movie: movie)
+                }
+                .listRowSeparator(.hidden)
+                }
+                .navigationBarTitle("Movies")
+                .listStyle(PlainListStyle())
+        }.onAppear(perform: loadData)
     }
     
     private func loadData() {
